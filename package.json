@@ -1,0 +1,21 @@
+{
+  "name": "nodeexpress-mongodb",
+  "version": "1.0.0",
+  "description": "CRUD web app using Node.js,ExpressJS, MongoDB, REST API, HTML, CSS JS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Jhenalyn Subol",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "keywords": []
+}
