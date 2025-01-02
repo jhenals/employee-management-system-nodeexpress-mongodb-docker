@@ -1,16 +1,20 @@
 const express = require("express");
-const dotenv = require("dotenv");
-dotenv.config();
-const connectDB = require("./config/db");
-
 const app = express();
 
+const dotenv = require("dotenv");
+dotenv.config();
+
+//DB
+const connectDB = require("./config/db");
 connectDB();
 const port = process.env.NODE_LOCAL_PORT || 3020;
 
+//Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public")); //this will helps to use style.css file
 
+//CORS
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -24,15 +28,14 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.send(
-    "Welcome to Apollonia Dental Practice Employee Management System API"
-  );
-});
+const path = require("path");
 
-//require("./routes/api.routes")(app);
+//Register view engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-app.use("/", require("./routes/api.js"));
+const apiRouter = require("./routes/api");
+app.use(apiRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

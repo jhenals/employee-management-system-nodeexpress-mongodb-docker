@@ -1,0 +1,66 @@
+<%- include('partials/layout', {title:'Add Employee'}) %>
+ 
+ <!-- Add Employee Form -->
+  <h3>Add New Employee</h3>
+  <form id="employeeForm">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="employeeName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="employeeName" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="employeeName" class="form-label">Surname</label>
+        <input type="text" class="form-control" id="employeeName" required />
+      </div>
+    </div>
+   
+    <div class="mb-3">
+      <label for="employeeDepartment" class="form-label">Department</label>
+      <select id="employeeDepartment" class="form-select">
+        <!-- Department options will be populated here -->
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    fetchEmployees();
+    fetchDepartments();
+
+    // Handle form submission
+    document
+      .getElementById("employeeForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("employeeName").value;
+        const departmentId =
+          document.getElementById("employeeDepartment").value;
+        const data = { name, department: departmentId };
+
+        // Determine if we are adding a new employee or updating
+        const method = this.dataset.id ? "PUT" : "POST";
+        const url = this.dataset.id
+          ? `/api/employees/${this.dataset.id}`
+          : "/api/employees";
+
+        fetch(url, {
+          method: method,
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then(() => {
+            fetchEmployees();
+            this.reset();
+            delete this.dataset.id;
+          })
+          .catch((err) => console.error("Error:", err));
+      });
+  });
+
+</script>
