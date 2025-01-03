@@ -52,16 +52,9 @@
 
                 <div class="modal-footer">
                   <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-bs-dismiss="modal"
-                  >
-                    Close
-                  </button>
-                  <button
-                    type="button"
+                    type="submit"
                     class="btn btn-primary"
-                    onclick="addDepartment('${dept._id}')"
+                    id="addDepartmentButton"
                   >
                     Submit
                   </button>
@@ -158,20 +151,30 @@
       .catch((err) => console.error("Error deleting employee:", err));
   }
 
-  function addDepartment(id) {
-    const name = document.getElementById("newDepartmentName").value;
-    const data = { name };
-    fetch("/api/departments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then(() => {
-        fetchDepartments();
+  document
+    .getElementById("departmentForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("departmentName").value;
+      const data = { name };
+
+      fetch("/api/departments", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       })
-      .catch((err) => console.error("Error:", err));
-  }
+        .then((response) => response.json())
+        .then(() => {
+          fetchDepartments();
+          console.log("Department added successfully");
+        })
+        .then(() => {
+          document.getElementById("departmentName").value = "";
+          window.location.href = "/departments";
+        })
+        .catch((err) => console.error("Error:", err));
+    });
 </script>
