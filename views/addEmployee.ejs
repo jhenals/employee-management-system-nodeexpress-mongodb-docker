@@ -23,47 +23,46 @@
   </form>
 </div>
 </div>
+
  
- 
+
+
 
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
-    fetchDepartments();
+  document.addEventListener("DOMContentLoaded", function () {
+  fetchDepartments();
 
-    // Handle form submission
-    document
-      .getElementById("employeeForm")
-      .addEventListener("submit", function (e) {
-        e.preventDefault();
+  document
+    .getElementById("employeeForm")
+    .addEventListener("submit", function (e) {
+      e.preventDefault();
 
-        const name = document.getElementById("employeeName").value;
-        const surname= document.getElementById("employeeSurname").value;
-        const departmentName =
-          document.getElementById("employeeDepartment").value;
-        const data = { name, surname, department: departmentName };
+      const name = document.getElementById("employeeName").value;
+      const surname = document.getElementById("employeeSurname").value;
+      const departmentName =
+        document.getElementById("employeeDepartment").value;
+      const data = { name, surname, department: departmentName };
 
-        fetch("/api/employees", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
+      fetch("/api/employees", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to create employee");
+          }
+          return response.json();
         })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Failed to create employee");
-            }
-            return response.json();
-          })
-          .then(() => {
+        .then(() => {
+          window.location.href = "/";
+        })
+        .catch((err) => console.error("Error:", err));
+    });
+});
 
-            window.location.href = "/";
-          })
-          .catch((err) => console.error("Error:", err));
-      });
-  });
-
-  // Fetch departments from API and populate the dropdown
 function fetchDepartments() {
   fetch("/api/departments")
     .then((response) => {
@@ -84,5 +83,4 @@ function fetchDepartments() {
     })
     .catch((err) => console.error("Error fetching departments:", err));
 }
-
 </script>

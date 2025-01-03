@@ -33,7 +33,8 @@ const path = require("path");
 //Register view engine
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
-app.use(express.static("public")); // Serve static files from the 'public' folder
+
+app.use(express.static(path.resolve(__dirname, "public")));
 
 const apiRouter = require("./routes/api");
 app.use(apiRouter);
