@@ -140,31 +140,32 @@
   }
 
   function editEmployee(employeeId) {
-  fetch(`/api/employees/${employeeId}`)
-    .then((response) => response.json())
-    .then((employee) => {
-      currentEmployee = employee; 
-      document.getElementById("employeeName").value = employee.name;
-      document.getElementById("employeeSurname").value = employee.surname;
+    fetch(`/api/employees/${employeeId}`)
+      .then((response) => response.json())
+      .then((employee) => {
+        currentEmployee = employee; 
+        document.getElementById("employeeName").value = employee.name;
+        document.getElementById("employeeSurname").value = employee.surname;
 
-      fetchDepartments().then(() => {
-         document.getElementById("employeeDepartment").value = employee.department.name;
-      });
+        fetchDepartments().then(() => {
+          document.getElementById("employeeDepartment").value = employee.department.name;
+        });
 
-      const employeeForm = document.getElementById("employeeForm");
-      employeeForm.dataset.id = employeeId;
+        const employeeForm = document.getElementById("employeeForm");
+        employeeForm.dataset.id = employeeId;
 
-      $("#editEmployeeModal").modal("show");
-    })
-    .catch((err) => console.error("Error fetching employee:", err));
-}
+        $("#editEmployeeModal").modal("show");
+      })
+      .catch((err) => console.error("Error fetching employee:", err));
+  }
 
 
   document.getElementById("employeeName").addEventListener("input", (e) => {
   if (currentEmployee) {
     currentEmployee.name = e.target.value; 
   }
-});
+  });
+
 
 document.getElementById("employeeSurname").addEventListener("input", (e) => {
   if (currentEmployee) {
