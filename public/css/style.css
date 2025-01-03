@@ -32,6 +32,12 @@
       margin-left: 20px;
       font-weight: bolder;
     }
+
+    nav li :hover{
+      color: white; /* Text color on hover */
+      background-color: #333; /* Background color on hover */
+      border-radius: 5px; /* Optional rounded corners */
+    }
     nav li a{
       font-weight: bolder;
     }

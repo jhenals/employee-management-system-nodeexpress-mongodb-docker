@@ -59,6 +59,7 @@ exports.findOneEmployee = async (req, res) => {
   const id = req.params.id;
 
   await Employee.findById(id)
+    .populate("department")
     .then((data) => {
       if (!data)
         res.status(404).send({ message: "Not found Employee with id " + id });

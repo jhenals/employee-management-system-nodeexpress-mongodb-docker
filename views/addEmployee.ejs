@@ -1,6 +1,6 @@
 <%- include('partials/layout', {title:'Add Employee'}) %>
- 
- <!-- Add Employee Form -->
+
+<div class="container mt-5">
   <h3>Add New Employee</h3>
   <form id="employeeForm">
     <div class="row">
@@ -9,24 +9,25 @@
         <input type="text" class="form-control" id="employeeName" required />
       </div>
       <div class="col-md-6 mb-3">
-        <label for="employeeName" class="form-label">Surname</label>
-        <input type="text" class="form-control" id="employeeName" required />
+        <label for="employeeSurname" class="form-label">Surname</label>
+        <input type="text" class="form-control" id="employeeSurname" required />
       </div>
     </div>
    
     <div class="mb-3">
       <label for="employeeDepartment" class="form-label">Department</label>
       <select id="employeeDepartment" class="form-select">
-        <!-- Department options will be populated here -->
       </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
+</div>
+ 
+ 
 
 <script>
    document.addEventListener("DOMContentLoaded", function () {
-    fetchEmployees();
     fetchDepartments();
 
     // Handle form submission
@@ -36,31 +37,52 @@
         e.preventDefault();
 
         const name = document.getElementById("employeeName").value;
-        const departmentId =
+        const surname= document.getElementById("employeeSurname").value;
+        const departmentName =
           document.getElementById("employeeDepartment").value;
-        const data = { name, department: departmentId };
+        const data = { name, surname, department: departmentName };
 
-        // Determine if we are adding a new employee or updating
-        const method = this.dataset.id ? "PUT" : "POST";
-        const url = this.dataset.id
-          ? `/api/employees/${this.dataset.id}`
-          : "/api/employees";
-
-        fetch(url, {
-          method: method,
+        fetch("/api/employees", {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to create employee");
+            }
+            return response.json();
+          })
           .then(() => {
-            fetchEmployees();
-            this.reset();
-            delete this.dataset.id;
+
+            window.location.href = "/";
           })
           .catch((err) => console.error("Error:", err));
       });
   });
+
+  // Fetch departments from API and populate the dropdown
+function fetchDepartments() {
+  fetch("/api/departments")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Failed to fetch departments");
+      }
+      return response.json();
+    })
+    .then((departments) => {
+      const departmentSelect = document.getElementById("employeeDepartment");
+      departmentSelect.innerHTML = `<option value="" disabled selected>Select a department</option>`;
+      departments.forEach((department) => {
+        const option = document.createElement("option");
+        option.value = department.name;
+        option.textContent = department.name;
+        departmentSelect.appendChild(option);
+      });
+    })
+    .catch((err) => console.error("Error fetching departments:", err));
+}
 
 </script>
