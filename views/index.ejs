@@ -53,7 +53,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <form id="employeeForm">
+          <form id="updateEmployeeForm">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="employeeName" class="form-label">Name</label>
@@ -72,7 +72,7 @@
             </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" id="submitUpdatedEmployeeButton">Submit</button>
+              <button type="submit" class="btn btn-danger" >Submit</button>
             </div>
 
           </form>
@@ -120,13 +120,21 @@
     fetch("/api/employees")
       .then((response) => response.json())
       .then((data) => {
+        data.sort((a, b) => {
+          const nameA = `${a.name} ${a.surname}`.toLowerCase();
+          const nameB = `${b.name} ${b.surname}`.toLowerCase();
+          return nameA.localeCompare(nameB);
+        }
+        );
+      
         const table = document.getElementById("employeeTable");
         table.innerHTML = "";
         data.forEach((employee) => {
+          const departmentName = employee.department ? employee.department.name : "N/A";
           const row = `
           <tr>
             <td>${employee.name} ${employee.surname}</td>
-            <td>${employee.department.name}</td>
+            <td>${departmentName}</td>
             <td>
               <button class="btn btn-warning" onclick="editEmployee('${employee._id}')">Edit</button>
               <button class="btn btn-danger" onclick="deleteEmployee('${employee._id}')">Delete</button>
@@ -143,16 +151,13 @@
     fetch(`/api/employees/${employeeId}`)
       .then((response) => response.json())
       .then((employee) => {
-        currentEmployee = employee; 
+        currentEmployee = { ...employee };
         document.getElementById("employeeName").value = employee.name;
         document.getElementById("employeeSurname").value = employee.surname;
 
-        fetchDepartments().then(() => {
-          document.getElementById("employeeDepartment").value = employee.department.name;
-        });
-
+        fetchDepartments();
+        document.getElementById("employeeDepartment").value.name = employee.department ? employee.department.name : "";
         const employeeForm = document.getElementById("employeeForm");
-        employeeForm.dataset.id = employeeId;
 
         $("#editEmployeeModal").modal("show");
       })
@@ -174,34 +179,55 @@ document.getElementById("employeeSurname").addEventListener("input", (e) => {
 });
 
 document.getElementById("employeeDepartment").addEventListener("change", (e) => {
+  let deptId = null;
+  
   if (currentEmployee) {
-    currentEmployee.department = e.target.value; // Update the department ID in the object
+    fetch('/api/departments')
+      .then((response) => response.json())
+      .then((data) => {
+        data.forEach((department) => {
+          if (department.name === e.target.value) {
+            deptId = department._id;
+          }
+        });
+      })
+      .then(() => {
+        currentEmployee.department = deptId;
+        console.log(currentEmployee);
+      })
+      .catch((err) => console.error("Error fetching departments:", err));
   }
 });
 
-document.getElementById("employeeForm").addEventListener("submit", function (e) {
+
+document.getElementById("updateEmployeeForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   if (currentEmployee) {
     fetch(`/api/employees/${currentEmployee._id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(currentEmployee),
-    })
-      .then((response) => {
-        if (!response.ok) throw new Error("Failed to update employee");
-        return response.json();
-      })
-      .then(() => {
-        $("#editEmployeeModal").modal("hide"); 
-        fetchEmployees(); // Refresh the employee table
-        currentEmployee = null; // Reset the stored employee object
-      })
-      .catch((err) => console.error("Error updating employee:", err));
-  }
-});
+  method: "PUT",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: currentEmployee.name,
+    surname: currentEmployee.surname,
+    department: currentEmployee.department
+  }),
+})
+  .then((response) => response.json())
+  .then((updatedEmployee) => {
+    console.log("Employee updated:", updatedEmployee);
+  })
+  .then(() => {
+    $('#editEmployeeModal').modal('hide'); // Hide the modal
+    fetchEmployees(); // Fetch the updated list of employees
+    currentEmployee = null; // Reset the stored employee
+    window.location.href = "/";
+  })
+  .catch((err) => console.error("Error updating employee:", err));
+  } 
+  });
 
 
 

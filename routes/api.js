@@ -17,6 +17,8 @@ router.get("/api/departments/:id", controller.findOneDepartment);
 router.put("/api/departments/:id", controller.updateDepartment);
 router.delete("/api/departments/:id", controller.deleteDepartment);
 
+router.get("/api/departments/:id/employees", controller.findStaffsByDepartment);
+
 //
 router.get("/", async (req, res) => {
   try {
@@ -37,6 +39,10 @@ router.get("/departments", (req, res) => {
 
 router.get("/add-department", (req, res) => {
   res.render("adddepartment", { title: "Add Department" });
+});
+
+router.get("/staffs-by-department", (req, res) => {
+  res.render("staffsbydepartment", { title: "Staffs By Department" });
 });
 
 module.exports = router;

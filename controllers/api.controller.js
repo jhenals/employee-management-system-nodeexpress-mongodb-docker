@@ -184,6 +184,26 @@ exports.findOneDepartment = async (req, res) => {
     });
 };
 
+exports.findStaffsByDepartment = async (req, res) => {
+  const id = req.params.id;
+  await Employee.find({ department: id })
+    .then((employees) => {
+      if (employees.length === 0) {
+        return res
+          .status(404)
+          .send({ message: "No employees found in department with id " + id });
+      }
+      res.send(employees); // Return the list of employees in that department
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .send({
+          message: "Error retrieving employees in department with id=" + id,
+        });
+    });
+};
+
 exports.updateDepartment = async (req, res) => {
   if (!req.body) {
     return res.status(400).send({

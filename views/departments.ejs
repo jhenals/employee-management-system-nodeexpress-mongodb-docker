@@ -302,7 +302,7 @@
         });
     });
 
-  /* document
+  document
     .getElementById("departmentForm")
     .addEventListener("submit", function (e) {
       e.preventDefault();
@@ -319,6 +319,7 @@
       })
         .then((response) => response.json())
         .then(() => {
+          $("#exampleModal").modal("hide");
           fetchDepartments();
           console.log("Department added successfully");
         })
@@ -327,5 +328,5 @@
           window.location.href = "/departments";
         })
         .catch((err) => console.error("Error:", err));
-    }); */
+    });
 </script>

@@ -1,0 +1,58 @@
+<%- include('partials/layout', { title: 'Staffs by Department' }) %>
+
+<div class="container mt-5">
+  <div class="d-flex mb-2 justify-content-between">
+    <h3>Staffs By Department</h3>
+  </div>
+
+  <table id="staffTable" class="text-center table">
+    <thead>
+      <tr id="departmentHeaders">
+        <!-- Dynamic department headers will be added here -->
+      </tr>
+    </thead>
+    <tbody id="employeeRows">
+      <!-- Rows of employees for each department will be added here -->
+    </tbody>
+  </table>
+
+  <footer class="bg-light text-center py-3 mt-5">
+    <p>&copy; 2025 Apollonia Dental Practice</p>
+  </footer>
+</div>
+
+<script>
+  fetch("/api/departments") // Adjust the URL as needed to get departments
+    .then((response) => response.json())
+    .then((departments) => {
+      // Create table headers for each department
+      const headers = document.getElementById("departmentHeaders");
+      const rows = document.getElementById("employeeRows");
+
+      departments.forEach((department) => {
+        const th = document.createElement("th");
+        th.textContent = department.name;
+        headers.appendChild(th);
+
+        // Fetch employees for this department
+        fetch(`/api/departments/${department._id}/employees`)
+          .then((response) => response.json())
+          .then((employees) => {
+            // Create a row for each employee
+            const td = document.createElement("td");
+            const employeeList = document.createElement("ul");
+            employees.forEach((employee) => {
+              const li = document.createElement("li");
+              li.textContent = `${employee.name} ${employee.surname}`;
+              employeeList.appendChild(li);
+            });
+            td.appendChild(employeeList);
+            rows.appendChild(td);
+          })
+          .catch((err) =>
+            console.error("Error fetching employees for department:", err)
+          );
+      });
+    })
+    .catch((err) => console.error("Error fetching departments:", err));
+</script>
