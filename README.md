@@ -47,22 +47,22 @@ docker-compose up -d
 
 # UI
 **version1:** <br>
-Homepage
+Homepage<br>
 ![image](https://github.com/user-attachments/assets/1c5556b1-4f83-4a22-a17f-dd9f66560617)
 
-Adding new Employee
+Adding new Employee <br>
 ![image](https://github.com/user-attachments/assets/e6c89007-6aed-4377-8167-cf450f611c49)
 
-Adding new Department (dialog box)
+Adding new Department (dialog box) <br>
 ![image](https://github.com/user-attachments/assets/50698241-03a8-4351-8483-a76f78743acb)
 
-Editing existing Department
+Editing existing Department <br>
 ![image](https://github.com/user-attachments/assets/672b2a14-7612-48d9-9938-977873fdeb61)
 
 Delete existing Department
 ![image](https://github.com/user-attachments/assets/0faf0f77-fd6a-48e4-9d60-68f65a72188c)
 
-Editing existing Employee
+Editing existing Employee <br>
 ![image](https://github.com/user-attachments/assets/b7c7f64e-4787-4ed1-9b1c-ef68d35e112e)
 
 ## API Endpoints 🌐
