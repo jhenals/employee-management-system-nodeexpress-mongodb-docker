@@ -4,10 +4,10 @@
 This project is an employee management system for a dental practice (Apollonia Dental Practice), designed to help the clinic keep track of its medical staff and departments. It is the first step towards developing a full employee and customer relationship management system.
 
 ## Features 🚀
-✅ Add, update, and remove employees
-✅ Assign employees to departments
-✅ Manage a list of available departments
-✅ Store employee details (Name, Surname, Department)
+✅ Add, update, and remove employees  <br>
+✅ Assign employees to departments  <br>
+✅ Manage a list of available departments <br>
+✅ Store employee details (Name, Surname, Department) 
 
 ## Future Enhancements 🔮
 In later versions, the system may include:
@@ -17,7 +17,7 @@ In later versions, the system may include:
 * Patient management
 * Revenue tracking for each staff member
 
-Tech Stack 🛠️
+## Tech Stack 🛠️
 * Backend: Node.js / Express
 * Database: MongoDB
 * Containerization: Docker
@@ -46,7 +46,7 @@ docker-compose up -d
 ```
 
 # UI
-**version1:**
+**version1:** <br>
 Homepage
 ![image](https://github.com/user-attachments/assets/1c5556b1-4f83-4a22-a17f-dd9f66560617)
 
@@ -69,41 +69,41 @@ Editing existing Employee
 ![image](https://github.com/user-attachments/assets/8573a16b-99a8-4126-b2ec-d67c3e55eb38)
 
 ## Data
-Apollonia Dental Practice currently has 10 employees: 
-Lisa Harris 
-Alfred Christensen 
-John Dudley 
-Danny Perez 
-Sarah Alvarez 
-Constance Smith 
-Travis Combs 
-Francisco Willard 
-Janet Doe 
-Leslie Roche 
+Apollonia Dental Practice currently has 10 employees: <br>
+Lisa Harris <br>
+Alfred Christensen <br>
+John Dudley <br>
+Danny Perez <br>
+Sarah Alvarez <br>
+Constance Smith <br>
+Travis Combs <br>
+Francisco Willard <br>
+Janet Doe <br>
+Leslie Roche <br>
+<br>
+Apollonia Dental Practice currently has 5 departments: <br>
+General Dentistry <br>
+Pediatric Dentistry <br>
+Restorative Dentistry <br>
+Surgery Orthodontics <br>
+<br>
+The company has also provided you with the list of staff by department: <br>
+● General Dentistry <br>
+○ Alfred Christensen <br>
+○ JohnDudley <br>
+○ Janet Doe <br>
 
-Apollonia Dental Practice currently has 5 departments: 
-General Dentistry 
-Pediatric Dentistry 
-Restorative Dentistry 
-Surgery Orthodontics 
+● Pediatric Dentistry <br>
+○ Francisco Willard <br>
+○ SarahAlvarez<br>
 
-The company has also provided you with the list of staff by department: 
-● General Dentistry 
-○ Alfred Christensen 
-○ JohnDudley 
-○ Janet Doe 
+● Restorative Dentistry <br>
+○ LisaHarris <br>
+○ DannyPerez <br>
 
-● Pediatric Dentistry 
-○ Francisco Willard 
-○ SarahAlvarez
+● Surgery <br>
+○ Constance Smith <br>
 
-● Restorative Dentistry 
-○ LisaHarris 
-○ DannyPerez 
-
-● Surgery 
-○ Constance Smith 
-
-● Orthodontics 
-○ Leslie Roche 
-○ LisaHarris
+● Orthodontics <br>
+○ Leslie Roche <br>
+○ LisaHarris <br>
