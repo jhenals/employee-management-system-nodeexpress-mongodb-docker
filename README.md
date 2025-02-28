@@ -23,7 +23,7 @@ In later versions, the system may include:
 * Containerization: Docker
 * Frontend: EJS (Embedded JavaScript Templates)
 
-Setup Instructions ⚙️
+## Setup Instructions ⚙️
 1. Clone the Repository
 ```
 git clone https://github.com/jhenals/nodeexpress-mongodb-docker.git
